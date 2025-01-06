@@ -25,10 +25,17 @@ dnf install -y waybar
 dnf install -y rofi
 dnf install -y waypaper
 dnf install -y swww
+dnf install -y greetd
+dnf install -y gtkgreet
 
 # this would install a package from rpmfusion
 # rpm-ostree install vlc
 
-#### Example for enabling a System Unit File
+# Apply & Replace greetd configuration
+rm -rf /etc/greetd/config.toml
+cp /tmp/config.toml /etc/greetd/
+cp /tmp/hyprland.conf /etc/greetd/
 
+#### Example for enabling a System Unit File
+systemctl enable greetd.service
 systemctl enable podman.socket

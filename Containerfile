@@ -15,6 +15,8 @@ FROM ghcr.io/ublue-os/base-main:latest
 
 COPY build.sh /tmp/build.sh
 COPY repos/* /etc/yum.repos.d/
+COPY config/login/greetd.toml /tmp/config.toml
+COPY config/login/hyprland.conf /tmp/hyprland.conf
 
 RUN mkdir -p /var/lib/alternatives && \
     /tmp/build.sh && \
