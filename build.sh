@@ -10,7 +10,7 @@ set -ouex pipefail
 # https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/39/x86_64/repoview/index.html&protocol=https&redirect=1
 
 # Copr Repos containing the necessary packages for this custom image.
-copr enable solopasha/hyprland
+dnf copr enable solopasha/hyprland
 
 # this installs a package from fedora repos
 dnf install -y tmux
