@@ -38,7 +38,7 @@ jobs:
       id-token: write
 
     outputs:
-      date: ${{ steps.date.outputs.date-short }}
+      date: ${{ steps.date-short.outputs.date }}
       tags: ${{ steps.metadata.outputs.tags }}
 
     steps:
@@ -144,6 +144,15 @@ jobs:
           TAGS: ${{ steps.push.outputs.digest }}
           COSIGN_EXPERIMENTAL: false
           COSIGN_PRIVATE_KEY: ${{ secrets.SIGNING_SECRET }}
+
+      - name: Apply Badge
+        uses: RubbaBoy/BYOB@v1.3.0
+        with:
+          NAME: build-timestamp
+          LABEL: "Version "
+          STATUS: ${{ steps.date.outputs.date }}
+          COLOR: B178FF
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build_iso:
     name: Build ISO file and push
