@@ -133,10 +133,20 @@ jobs:
           COSIGN_EXPERIMENTAL: false
           COSIGN_PRIVATE_KEY: ${{ secrets.SIGNING_SECRET }}
 
+  build_iso:
+    name: Build ISO file and push
+    runs-on: ubuntu-24.04
+    needs: build_push
+
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    steps:
       - name: Build ISO
         uses: jasonn3/build-container-installer@main
         id: build-iso
-        continue-on-error: true
         with:
           arch: ${{ env.ISO_ARCH}}
           image_name: ${{ env.IMAGE_NAME}}
@@ -149,7 +159,6 @@ jobs:
       - name: Upload ISO as artifact
         id: upload-iso
         uses: actions/upload-artifact@v4
-        continue-on-error: true
         with:
           name: ${{ steps.build.outputs.iso_name }}
           path: |
