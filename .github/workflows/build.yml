@@ -19,7 +19,7 @@ env:
   IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner }}" # do not edit
   IMAGE_VARIANT: "Silverblue" # Describes the base variant of the image.
   ARTIFACTHUB_LOGO_URL: "https://avatars.githubusercontent.com/u/120078124?s=200&v=4" # You should put your own image here so that you get a fancy profile image on https://artifacthub.io/!
-  ISO_ARCH: "amd64" # The main type of iso archiecture to be prefered to build the iso after the image is built and uploaded.
+  ISO_ARCH: "x86_64" # The main type of iso archiecture to be prefered to build the iso after the image is built and uploaded.
   ISO_INSTALLER_VERSION: 41 # The version of the iso installer, recommended to update when a new update is available.
 
 concurrency:
