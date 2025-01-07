@@ -1,4 +1,7 @@
 # Vortex Hyperbola
+[![Automatic Builds](https://github.com/vortex-repositories/hyperbola/actions/workflows/build.yml/badge.svg?branch=main&event=schedule)](https://github.com/vortex-repositories/hyperbola/actions/workflows/build.yml)
+[![Commit Builds](https://github.com/vortex-repositories/hyperbola/actions/workflows/build.yml/badge.svg?branch=main&event=push)](https://github.com/vortex-repositories/hyperbola/actions/workflows/build.yml)
+
 A Atomic Desktop built from the ground for minimalism and ease of access. Building on top of Hyprland with individual shell components to give a complete experience.
 
 > [!NOTE]
