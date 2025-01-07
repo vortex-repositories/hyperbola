@@ -31,6 +31,9 @@ dnf install -y gtkgreet
 # this would install a package from rpmfusion
 # rpm-ostree install vlc
 
+# Create the greeter system user for greetd
+useradd -M -N greeter
+
 # Apply & Replace greetd configuration
 rm -rf /etc/greetd/config.toml
 cp /tmp/config.toml /etc/greetd/
