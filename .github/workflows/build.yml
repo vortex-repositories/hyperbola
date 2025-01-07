@@ -18,6 +18,7 @@ env:
   IMAGE_DESC: "A Customized Universal Blue Image from Vortex Interactive."
   IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner }}" # do not edit
   ARTIFACTHUB_LOGO_URL: "https://avatars.githubusercontent.com/u/120078124?s=200&v=4" # You should put your own image here so that you get a fancy profile image on https://artifacthub.io/!
+  ISO_ARCH: "amd64" # The main type of iso archiecture to be prefered to build the iso after the image is built and uploaded.
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.run_id }}-${{ inputs.brand_name}}-${{ inputs.stream_name }}
@@ -131,3 +132,29 @@ jobs:
           TAGS: ${{ steps.push.outputs.digest }}
           COSIGN_EXPERIMENTAL: false
           COSIGN_PRIVATE_KEY: ${{ secrets.SIGNING_SECRET }}
+
+      - name: Build ISO
+        uses: jasonn3/build-container-installer@main
+        id: build-iso
+        continue-on-error: true
+        with:
+          arch: ${{ env.ISO_ARCH}}
+          image_name: ${{ env.IMAGE_NAME}}
+          image_repo: ${{ env.IMAGE_REGISTRY}}
+          image_tag: ${{ steps.metadata.outputs.tags }}
+          version: ${{ steps.date.outputs.date }}
+          iso_name: ${{ env.IMAGE_NAME }}-${{ steps.metadata.outputs.tags }}-${{ steps.date.outputs.date }}.iso
+
+      # This example is for uploading your ISO as a Github artifact. You can do something similar using any cloud storage, so long as you copy the output
+      - name: Upload ISO as artifact
+        id: upload-iso
+        uses: actions/upload-artifact@v4
+        continue-on-error: true
+        with:
+          name: ${{ steps.build.outputs.iso_name }}
+          path: |
+            ${{ steps.build.outputs.iso_path }}
+            ${{ steps.build.outputs.iso_path }}-CHECKSUM
+            if-no-files-found: error
+            retention-days: 0
+            compression-level: 0
