@@ -34,6 +34,10 @@ jobs:
       packages: write
       id-token: write
 
+    outputs:
+      date: ${{ steps.date.outputs.date }}
+      tags: ${{ steps.metadata.outputs.tags }}
+
     steps:
       # These stage versions are pinned by https://github.com/renovatebot/renovate
       - name: Checkout
@@ -151,9 +155,9 @@ jobs:
           arch: ${{ env.ISO_ARCH}}
           image_name: ${{ env.IMAGE_NAME}}
           image_repo: ${{ env.IMAGE_REGISTRY}}
-          image_tag: ${{ steps.metadata.outputs.tags }}
-          version: ${{ steps.date.outputs.date }}
-          iso_name: ${{ env.IMAGE_NAME }}-${{ steps.metadata.outputs.tags }}-${{ steps.date.outputs.date }}.iso
+          image_tag: ${{ needs.build_push.outputs.tags }}
+          version: ${{ needs.build_push.outputs.date }}
+          iso_name: ${{ env.IMAGE_NAME }}-${{ needs.build_push.outputs.tags }}-${{ needs.build_push.outputs.date }}.iso
 
       # This example is for uploading your ISO as a Github artifact. You can do something similar using any cloud storage, so long as you copy the output
       - name: Upload ISO as artifact
