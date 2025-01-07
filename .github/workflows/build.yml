@@ -37,7 +37,7 @@ jobs:
       id-token: write
 
     outputs:
-      date: ${{ steps.date.outputs.date }}
+      date: ${{ steps.date.outputs.date-short }}
       tags: ${{ steps.metadata.outputs.tags }}
 
     steps:
@@ -45,7 +45,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
-      - name: Get current date
+      - name: Generate Timestamp (1/2)
         id: date
         run: |
           # This generates a timestamp like what is defined on the ArtifactHub documentation
@@ -53,6 +53,11 @@ jobs:
           # https://artifacthub.io/docs/topics/repositories/container-images/
           # https://linux.die.net/man/1/date
           echo "date=$(date -u +%Y\-%m\-%d\T%H\:%M\:%S\Z)" >> $GITHUB_OUTPUT
+
+      - name: Generate Timestamp (2/2)
+        id: date-short
+        run: |
+          echo "date=$(date -u +%Y\-%m\-%d)" >> $GITHUB_OUTPUT
 
       # Image metadata for https://artifacthub.io/ - This is optional but is highly recommended so we all can get a index of all the custom images
       # The metadata by itself is not going to do anything, you choose if you want your image to be on ArtifactHub or not.
@@ -150,8 +155,8 @@ jobs:
       id-token: write
 
     steps:
-      - name: Get Image Metadata Date Tag
-        uses: jungwinter/split@master
+      - name: Read Image Tags
+        uses: jungwinter/split@v2
         id: collect
         with:
           msg: ${{ needs.build_push.outputs.tags }}
@@ -166,11 +171,11 @@ jobs:
           arch: ${{ env.ISO_ARCH}}
           image_name: ${{ env.IMAGE_NAME}}
           image_repo: ${{ env.IMAGE_REGISTRY}}
-          image_tag: ${{ steps.collect.outputs._3 }}
+          image_tag: ${{ steps.collect.outputs._2 }}
           version: ${{ env.ISO_INSTALLER_VERSION }}
           variant: ${{ env.IMAGE_VARIANT }}
           web_ui: true
-          iso_name: ${{ env.IMAGE_NAME }}-${{ steps.collect.outputs._3 }}-${{ needs.build_push.outputs.date }}.iso
+          iso_name: ${{ env.IMAGE_NAME }}-${{ steps.collect.outputs._2 }}-${{ needs.build_push.outputs.date }}.iso
 
       # This example is for uploading your ISO as a Github artifact. You can do something similar using any cloud storage, so long as you copy the output
       - name: Upload ISO as artifact
