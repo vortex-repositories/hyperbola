@@ -158,6 +158,7 @@ jobs:
     name: Build ISO file and push
     runs-on: ubuntu-24.04
     needs: build_push
+    continue-on-error: true
 
     permissions:
       contents: read
