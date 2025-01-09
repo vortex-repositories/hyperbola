@@ -13,12 +13,15 @@ FROM ghcr.io/ublue-os/base-main:latest
 ## make modifications desired in your image and install packages by modifying the build.sh script
 ## the following RUN directive does all the things required to run "build.sh" as recommended.
 
-COPY build.sh /tmp/build.sh
+#COPY build.sh /tmp/build.sh
+COPY build-files/* /tmp/build/
 COPY repos/* /etc/yum.repos.d/
+#COPY config/default/* /etc/skel/.config/
+
 COPY config/login/greetd.toml /tmp/config.toml
 COPY config/login/hyprland.conf /tmp/hyprland.conf
 
 RUN mkdir -p /var/lib/alternatives && \
-    /tmp/build.sh && \
+    /tmp/build/init.sh && \
     ostree container commit && \
     bootc container lint
