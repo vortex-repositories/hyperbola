@@ -30,11 +30,14 @@ The choice of how you install Hyperbola is up to you and depends on your existin
 ### Installing Hyperbola with Anaconda
 Hyperbola provides 2 common ways you can install with the Anaconda Installer, in case one does not work then the other can be used instead.
 
-You can download a pre-generated ISO from the github CI artifacts to install Hyperbola, a third party workflow action is used to generate the ISO completely after the image is built.
+You can download a pre-generated ISO from the [Github CI Artifacts](https://github.com/vortex-repositories/hyperbola/actions/workflows/build.yml) to install Hyperbola, a third party workflow action is used to generate the ISO completely after the image is built.
 pre-generated ISOs take 10 or more minutes to generate before being uploaded, and may be cancelled when a new commit patch is implemented.
 Pre-generated ISOs use the experimental Anaconda WebUI Installer for ease of use of installation, and may differ from other methods of installation.
 
-Alternatively, you can clone the repository and run the command ``just build-iso`` to get a local copy of the Anaconda Installer ISO.
+Alternatively, you can clone the repository and run the following command to get a local copy of the Anaconda Installer ISO:
+```
+just build-iso
+```
 This is directly provided by the Universal Blue Image Templates that Hyperbola is built on top of, and is preferred if the above fails to work.
 It is expected that ``just`` is installed on your system for this route to work.
 
