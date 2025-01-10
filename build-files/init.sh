@@ -14,7 +14,17 @@ echo "Installing core libraries" && dnf install -y gum tmux
 # this installs a package from fedora repos
 echo "Installing Hyprland" && dnf install -y hyprland hyprland-plugins hyprland-contrib hyprpaper hyprsunset xdg-desktop-portal-hyprland hyprlock hypridle hyprpolkitagent hyprsysteminfo
 echo "Installing Common Components" && dnf install -y waybar rofi waypaper swww
-echo "Installing Display Manager" && dnf install -y greetd gtkgreet
+echo "Installing Display Manager Backend" && dnf install -y greetd
+echo "Installing Display Manager" && dnf install -y gtkgreet
+
+if command -v sway 2>&1 >/dev/null; then
+    echo "Sway was accidentally installed, and since we cannot exclude gtkgreet, we delete sway related packages"
+    rm -rf /usr/share/wayland-sessions/sway.desktop
+    rm -rf /usr/bin/sway
+    rm -rf /usr/bin/foot
+    rm -rf /usr/bin/sway*
+    rm -rf /usr/bin/foot*
+fi
 
 # this would install a package from rpmfusion
 # rpm-ostree install vlc
