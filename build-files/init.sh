@@ -22,10 +22,11 @@ echo "Preparing to build Display Manager..."
 mkdir /tmp/regreet/
 wget -q 'https://api.github.com/repos/rharish101/ReGreet/releases/latest' -O '/tmp/regreet/release-metadata'
 
-regreet_metadata=$(cat /tmp/regreet/release/metadata)
+regreet_metadata=$(cat /tmp/regreet/release-metadata)
 regreet_version=$(echo "$regreet_metadata" | jq '.name')
 regreet_tarball=$(echo "$regreet_metadata" | jq '.tarball_url')
-wget -q $regreet_tarball -O '/tmp/regreet/repository'
+wget "https://api.github.com/repos/rharish101/ReGreet/tarball/$regreet_version" -O '/tmp/regreet/repository.tar.gz'
+tar -xf repository.tar.gz -C /tmp/regreet/repository
 cd /tmp/regreet/repository
 echo "Building Display Manager"
 cargo build -F gtk4_8 --release
