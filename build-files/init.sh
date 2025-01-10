@@ -49,6 +49,7 @@ cp /tmp/config.toml /etc/greetd/
 cp /tmp/hyprland.conf /etc/greetd/
 
 #source dotfile-installation
+chmod +x /usr/share/hyperbola/scripts/*.sh
 
 #### Example for enabling a System Unit File
 systemctl enable greetd.service
