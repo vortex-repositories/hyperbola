@@ -4,7 +4,7 @@ set -ouex pipefail
 
 ### Install packages
 
-echo "Installing core libraries" && dnf install -y gum tmux
+echo "Installing core libraries" && dnf install -y gum tmux jq cargo gtk4-devel
 
 # Packages can be installed from any enabled yum repo on the image.
 # RPMfusion repos are available by default in ublue main images
@@ -15,7 +15,23 @@ echo "Installing core libraries" && dnf install -y gum tmux
 echo "Installing Hyprland" && dnf install -y hyprland hyprland-plugins hyprland-contrib hyprpaper hyprsunset xdg-desktop-portal-hyprland hyprlock hypridle hyprpolkitagent hyprsysteminfo
 echo "Installing Common Components" && dnf install -y waybar rofi waypaper swww
 echo "Installing Display Manager Backend" && dnf install -y greetd
-echo "Installing Display Manager" && dnf install -y gtkgreet
+#echo "Installing Display Manager" && dnf install -y gtkgreet
+
+## Regreet copr is inactive and there is no native RPM for Regreet, it will be manually build & installed instead.
+echo "Preparing to build Display Manager..."
+mkdir /tmp/regreet/
+wget -q 'https://api.github.com/repos/rharish101/ReGreet/releases/latest' -O '/tmp/regreet/release-metadata'
+
+regreet_metadata=$(cat /tmp/regreet/release/metadata)
+regreet_version=$(echo "$regreet_metadata" | jq '.name')
+regreet_tarball=$(echo "$regreet_metadata" | jq '.tarball_url')
+wget -q $regreet_tarball -O '/tmp/regreet/repository'
+cd /tmp/regreet/repository
+echo "Building Display Manager"
+cargo build -F gtk4_8 --release
+echo "Installing Display Manager"
+cp target/release/regreet /usr/bin
+cd /
 
 if command -v sway 2>&1 >/dev/null; then
     echo "Sway was accidentally installed, and since we cannot exclude gtkgreet, we delete sway related packages"
