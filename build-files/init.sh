@@ -19,9 +19,10 @@ echo "Installing Display Manager Backend" && dnf install -y greetd
 
 ## Regreet copr is inactive and there is no native RPM for Regreet, it will be manually build & installed instead.
 echo "Preparing to build Display Manager..."
-rm -rf /root/.cargo
+rm -rf /root/.cargo/
 sleep 1
-mkdir /root/.cargo
+mkdir /root/
+mkdir /root/.cargo/
 mkdir /tmp/regreet/
 mkdir /tmp/regreet/repository
 wget -q 'https://api.github.com/repos/rharish101/ReGreet/releases/latest' -O '/tmp/regreet/release-metadata'
@@ -76,3 +77,6 @@ chmod +x /usr/share/hyperbola/scripts/*.sh
 systemctl enable greetd.service
 systemctl enable podman.socket
 systemctl enable greetd-workaround.service
+
+#### Cleanup /root
+rm -rf /root/
