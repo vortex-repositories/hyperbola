@@ -23,7 +23,7 @@ mkdir /tmp/regreet/
 wget -q 'https://api.github.com/repos/rharish101/ReGreet/releases/latest' -O '/tmp/regreet/release-metadata'
 
 regreet_metadata=$(cat /tmp/regreet/release-metadata)
-regreet_version=$(echo "$regreet_metadata" | jq '.name')
+regreet_version=$(echo "$regreet_metadata" | jq '.name' | tr -d '"')
 regreet_tarball=$(echo "$regreet_metadata" | jq '.tarball_url')
 wget "https://api.github.com/repos/rharish101/ReGreet/tarball/$regreet_version" -O '/tmp/regreet/repository.tar.gz'
 tar -xf repository.tar.gz -C /tmp/regreet/repository
