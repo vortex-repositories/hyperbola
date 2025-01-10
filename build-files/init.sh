@@ -5,10 +5,6 @@ set -ouex pipefail
 ### Install packages
 
 echo "Installing core libraries" && dnf install -y gum tmux jq cargo gtk4-devel
-echo "Setting Up dev tools"
-rm -rf /root/.cargo/
-sleep 1
-mkdir /root/.cargo/
 
 # Packages can be installed from any enabled yum repo on the image.
 # RPMfusion repos are available by default in ublue main images
