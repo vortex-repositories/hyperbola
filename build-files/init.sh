@@ -20,13 +20,14 @@ echo "Installing Display Manager Backend" && dnf install -y greetd
 ## Regreet copr is inactive and there is no native RPM for Regreet, it will be manually build & installed instead.
 echo "Preparing to build Display Manager..."
 mkdir /tmp/regreet/
+mkdir /tmp/regreet/repository
 wget -q 'https://api.github.com/repos/rharish101/ReGreet/releases/latest' -O '/tmp/regreet/release-metadata'
 
 regreet_metadata=$(cat /tmp/regreet/release-metadata)
 regreet_version=$(echo "$regreet_metadata" | jq '.name' | tr -d '"')
 regreet_tarball=$(echo "$regreet_metadata" | jq '.tarball_url')
 wget "https://api.github.com/repos/rharish101/ReGreet/tarball/$regreet_version" -O '/tmp/regreet/repository.tar.gz'
-tar -xf /tmp/regreet/repository.tar.gz -C /tmp/regreet/repository
+tar -xvf /tmp/regreet/repository.tar.gz -C /tmp/regreet/repository
 cd /tmp/regreet/repository
 echo "Building Display Manager"
 cargo build -F gtk4_8 --release
