@@ -6,3 +6,5 @@ grep -E '^greetd:' /usr/etc/group | tee -a /etc/group
 grep -E '^greetd:' /usr/etc/shadow | tee -a /etc/shadow
 
 # this is simply a workaround fix script that fixes issues where greetd doesnt exist despite being installed in build process.
+# Systemd runs this script so we exit with zero to indicate the result was a success.
+exit 0
