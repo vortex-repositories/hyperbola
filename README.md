@@ -8,7 +8,7 @@ A Atomic Desktop built from the ground for minimalism and ease of access. Buildi
 > The atomic desktop image(s) is currently work in progress, and is highly not recommended to run bare-metal at this time!
 > If you wish to test the image(s) despite the unfinished state, consider rebasing in a VM with the following command:
 > ```
-> rpm-ostree rebase ghcr.io/vortex-repositories/hyperbola
+> rpm-ostree rebase ostree-image-signed:docker://ghcr.io/vortex-repositories/hyperbola:latest
 > ```
 
 ## About

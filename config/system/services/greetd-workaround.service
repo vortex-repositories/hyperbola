@@ -1,0 +1,10 @@
+[Unit]
+Description=greetd Workaround Script
+Before=greetd.service
+
+[Service]
+Type=Repair
+ExecStart=/usr/share/hyperbola/scripts/greetd-workaround.sh
+
+[Install]
+WantedBy=graphical.target

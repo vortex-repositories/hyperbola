@@ -17,6 +17,8 @@ FROM ghcr.io/ublue-os/base-main:latest
 COPY build-files/* /tmp/build/
 COPY repos/* /etc/yum.repos.d/
 #COPY config/default/* /etc/skel/.config/
+COPY config/system/scripts/* /usr/share/hyperbola/scripts/
+COPY config/system/services/* /etc/systemd/system/
 
 COPY config/login/greetd.toml /tmp/config.toml
 COPY config/login/hyprland.conf /tmp/hyprland.conf

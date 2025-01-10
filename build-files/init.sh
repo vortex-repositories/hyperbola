@@ -25,7 +25,10 @@ echo "Installing Display Manager" && dnf install -y greetd gtkgreet
 ## Instead try to manually add to /usr/etc/passwd
 #grep -E '^greetd:' /usr/etc/passwd | tee -a /etc/passwd
 #grep -E '^greetd:' /usr/etc/group | tee -a /etc/group
-## this does not work either because build process will error, because it doesn't exist.
+## this does not work either because build process will error as in the process, it doesn't exist.
+### In both podman and VM/Bare Metal, greetd is not found in /etc/shadow, Try to add it manually..
+#echo 'greetd:!:::::::' >> /etc/shadow
+## it gets added to /usr/etc/shadow, we do not know a easier way to move this to base /etc/shadow everytime.
 
 # Apply & Replace greetd configuration
 mkdir /usr/share/greetd
@@ -40,3 +43,4 @@ cp /tmp/hyprland.conf /etc/greetd/
 #### Example for enabling a System Unit File
 systemctl enable greetd.service
 systemctl enable podman.socket
+systemctl enable greetd-workaround.service
