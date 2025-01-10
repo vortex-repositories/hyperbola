@@ -12,6 +12,9 @@ on:
     paths-ignore:
       - "**/README.md"
       - "docs/*"
+      - "Justfile"
+      - "image.toml"
+      - "iso.toml"
   workflow_dispatch:
 
 env:
