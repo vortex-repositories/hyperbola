@@ -3,11 +3,16 @@
 
 echo "Installing ML4W Python Dependencies"
 
-pip install --prefix=/usr pywal
-pip install --prefix=/usr pywalfox
+pip install --prefix=/usr --root-user-action=ignore pywal
+pip install --prefix=/usr --root-user-action=ignore pywalfox
 pywalfox install
-pip install --prefix=/usr screeninfo
-pip install --prefix=/usr hyprshade
+pip install --prefix=/usr --root-user-action=ignore screeninfo
+pip install --prefix=/usr --root-user-action=ignore hyprshade
+
+ln -s /usr/bin/pywal /usr/lib/python3.13/site-packages/pywal
+ln -s /usr/bin/pywalfox /usr/lib/python3.13/site-packages/pywalfox
+ln -s /usr/bin/screeninfo /usr/lib/python3.13/site-packages/screeninfo
+ln -s /usr/bin/hyprshade /usr/lib/python3.13/site-packages/hyprshade
 
 echo "Adding oh-my-posh to local binaries..."
 wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/bin/oh-my-posh
