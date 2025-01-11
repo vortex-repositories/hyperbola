@@ -5,6 +5,7 @@ fit = "Fill"
 [GTK]
 application_prefer_dark_theme = true
 cursor_theme_name = "Bibata-Modern-Classic"
+theme_name = "adw-gtk3-dark"
 
 [appearance]
 greeting_msg = "Welcome to Hyperbola"

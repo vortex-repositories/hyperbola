@@ -18,7 +18,7 @@ export CARGO_HOME="/tmp/.cargo"
 echo "Installing Hyprland" && dnf install -y hyprland hyprland-plugins hyprland-contrib hyprpaper hyprsunset xdg-desktop-portal-hyprland hyprlock hypridle hyprpolkitagent hyprsysteminfo
 echo "Installing Common Components" && dnf install -y waybar rofi waypaper swww
 echo "Installing Display Manager Backend" && dnf install -y greetd
-echo "Installing Misc Packages" && dnf install -y bibata-cursor-theme ghostty
+echo "Installing Misc Packages" && dnf install -y bibata-cursor-theme ghostty adw-gtk3-theme
 #echo "Installing Display Manager" && dnf install -y gtkgreet
 
 ## Regreet copr is inactive and there is no native RPM for Regreet, it will be manually build & installed instead.
