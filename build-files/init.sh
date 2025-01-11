@@ -3,9 +3,10 @@
 set -ouex pipefail
 
 ### Install packages
-echo "Installing core libraries" && dnf install -y gum tmux jq cargo gtk4-devel
+echo "Installing core libraries" && dnf install -y gum tmux jq cargo gtk4-devel python3-pip
 
-## Need to move .cargo to /tmp/ to prevent errors.
+## Some patches to make the build-files operate normally.
+mkdir -p /etc/skel/.config
 mkdir /tmp/.cargo
 export CARGO_HOME="/tmp/.cargo"
 
@@ -16,37 +17,15 @@ export CARGO_HOME="/tmp/.cargo"
 
 # this installs a package from fedora repos
 echo "Installing Hyprland" && dnf install -y hyprland hyprland-plugins hyprland-contrib hyprpaper hyprsunset xdg-desktop-portal-hyprland hyprlock hypridle hyprpolkitagent hyprsysteminfo
-echo "Installing Common Components" && dnf install -y waybar rofi waypaper swww
+echo "Installing Common Components" && dnf install -y astral aylurs-gtk-shell rofi waypaper swww cliphist nwg-look qt6ct nwg-dock-hyprland xdg-desktop-portal-gtk wlogout waybar nautilus
 echo "Installing Display Manager Backend" && dnf install -y greetd
-echo "Installing Misc Packages" && dnf install -y bibata-cursor-theme ghostty adw-gtk3-theme
-#echo "Installing Display Manager" && dnf install -y gtkgreet
+echo "Installing Misc Packages" && dnf install -y bibata-cursor-theme ghostty adw-gtk3-theme zsh yazi neovim
 
 ## Regreet copr is inactive and there is no native RPM for Regreet, it will be manually build & installed instead.
-echo "Preparing to build Display Manager..."
-mkdir /tmp/regreet/
-mkdir /tmp/regreet/repository
-wget -q 'https://api.github.com/repos/rharish101/ReGreet/releases/latest' -O '/tmp/regreet/release-metadata'
+source /tmp/build/regreet.sh
 
-regreet_metadata=$(cat /tmp/regreet/release-metadata)
-regreet_version=$(echo "$regreet_metadata" | jq '.name' | tr -d '"')
-regreet_tarball=$(echo "$regreet_metadata" | jq '.tarball_url')
-wget "https://api.github.com/repos/rharish101/ReGreet/tarball/$regreet_version" -O '/tmp/regreet/repository.tar.gz'
-tar -xvf /tmp/regreet/repository.tar.gz -C /tmp/regreet/repository --strip-components=1
-cd /tmp/regreet/repository
-echo "Building Display Manager"
-cargo build -F gtk4_8 --release
-echo "Installing Display Manager"
-cp target/release/regreet /usr/bin
-cd /
-
-if command -v sway 2>&1 >/dev/null; then
-    echo "Sway was accidentally installed, and since we cannot exclude gtkgreet, we delete sway related packages"
-    rm -rf /usr/share/wayland-sessions/sway.desktop
-    rm -rf /usr/bin/sway
-    rm -rf /usr/bin/foot
-    rm -rf /usr/bin/sway*
-    rm -rf /usr/bin/foot*
-fi
+## ML4W provides a installation script but is not conventional in build process, extraction will be done instead.
+source /tmp/build/ml4w-dotfiles.sh
 
 # this would install a package from rpmfusion
 # rpm-ostree install vlc
@@ -61,6 +40,8 @@ fi
 ### In both podman and VM/Bare Metal, greetd is not found in /etc/shadow, Try to add it manually..
 #echo 'greetd:!:::::::' >> /etc/shadow
 ## it gets added to /usr/etc/shadow, we do not know a easier way to move this to base /etc/shadow everytime.
+
+echo "Finishing Up"
 
 # Apply & Replace greetd configuration
 mkdir /usr/share/greetd
