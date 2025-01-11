@@ -3,7 +3,6 @@
 set -ouex pipefail
 
 ### Install packages
-echo "Getting Terra Repository " && dnf install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
 echo "Installing core libraries" && dnf install -y gum tmux jq cargo gtk4-devel
 
 ## Need to move .cargo to /tmp/ to prevent errors.
