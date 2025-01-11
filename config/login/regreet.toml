@@ -1,5 +1,5 @@
 [background]
-path = "/usr/share/hyperbola/wallpapers/main.png"
+path = "/usr/share/hyperbola/wallpapers/main-login.png"
 fit = "Fill"
 
 [GTK]
