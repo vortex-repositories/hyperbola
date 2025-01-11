@@ -1,14 +1,13 @@
 [Unit]
-Description=greetd Workaround Script
-Before=greetd.service
+Description=Python Deps Repair
 
 [Service]
 Type=oneshot
 User=root
 Group=root
 ExecStart=/usr/share/hyperbola/scripts/greetd-workaround.sh
-ExecStartPost=/usr/bin/systemctl disable --now %n
-SuccessExitStatus=0 15
+ExecStartPost=/usr/bin/systemctl disable %n
+SuccessExitStatus=0
 
 [Install]
 WantedBy=graphical.target

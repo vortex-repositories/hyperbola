@@ -58,4 +58,7 @@ chmod +x /usr/share/hyperbola/scripts/*.sh
 #### Example for enabling a System Unit File
 systemctl enable greetd.service
 systemctl enable podman.socket
+
+#### Post-build service patches
 systemctl enable greetd-workaround.service
+systemctl enable userspace-fix-deps.service
