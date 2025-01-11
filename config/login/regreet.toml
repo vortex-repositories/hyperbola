@@ -1,0 +1,10 @@
+[background]
+path = "/usr/share/hyperbola/wallpapers/main.png"
+fit = "Fill"
+
+[GTK]
+application_prefer_dark_theme = true
+cursor_theme_name = "Bibata-Modern-Classic"
+
+[appearance]
+greeting_msg = "Welcome to Hyperbola"
