@@ -61,4 +61,3 @@ systemctl enable podman.socket
 
 #### Post-build service patches
 systemctl enable greetd-workaround.service
-systemctl enable userspace-fix-deps.service

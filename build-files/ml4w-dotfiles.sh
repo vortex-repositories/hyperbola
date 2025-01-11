@@ -9,11 +9,6 @@ pip3 install --prefix=/usr --root-user-action=ignore screeninfo
 pywalfox install
 pip install --prefix=/usr --root-user-action=ignore hyprshade
 
-which pywal
-which pywalfox
-which screeninfo
-which hyprshade
-
 #ln -s /usr/bin/pywal /usr/lib/python3.13/site-packages/pywal/pywal
 #ln -s /usr/bin/pywalfox /usr/lib/python3.13/site-packages/pywalfox
 #ln -s /usr/bin/screeninfo /usr/lib/python3.13/site-packages/screeninfo/screeninfo
@@ -41,6 +36,10 @@ cp share/dotfiles/.Xresources /etc/skel/.Xresources
 cp share/dotfiles/.bashrc /etc/skel/.bashrc
 cp share/dotfiles/.zshrc /etc/skel/.zshrc
 cp share/dotfiles/.gtkrc-2.0 /etc/skel/.gtkrc-2.0
+
+# for wal to work, we should make a wallpapers example with the distro wallpapers symlinked
+mkdir /etc/skel/wallpapers/
+ln -s /usr/share/hyperbola/wallpapers/main.png /etc/skel/wallpapers/default.jpg
 
 # Copy the preferred font by the dotfiles (coming in future release)
 # cp share/fonts/FiraCode /usr/share/fonts
