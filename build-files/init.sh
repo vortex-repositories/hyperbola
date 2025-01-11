@@ -69,6 +69,7 @@ rm -rf /etc/greetd/config.toml
 
 cp /tmp/config.toml /etc/greetd/
 cp /tmp/hyprland.conf /etc/greetd/
+cp /tmp/regreet.toml /etc/greetd/
 
 #source dotfile-installation
 chmod +x /usr/share/hyperbola/scripts/*.sh

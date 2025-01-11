@@ -21,6 +21,7 @@ COPY config/system/scripts/* /usr/share/hyperbola/scripts/
 COPY assets/wallpapers/* /usr/share/hyperbola/wallpapers/
 COPY config/system/services/* /usr/lib/systemd/system/
 
+COPY config/login/regreet.toml /tmp/regreet.toml
 COPY config/login/greetd.toml /tmp/config.toml
 COPY config/login/hyprland.conf /tmp/hyprland.conf
 
