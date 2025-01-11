@@ -9,9 +9,9 @@ pywalfox install
 pip install --prefix=/usr --root-user-action=ignore screeninfo
 pip install --prefix=/usr --root-user-action=ignore hyprshade
 
-ln -s /usr/bin/pywal /usr/lib/python3.13/site-packages/pywal
+ln -s /usr/bin/pywal /usr/lib/python3.13/site-packages/pywal/pywal
 ln -s /usr/bin/pywalfox /usr/lib/python3.13/site-packages/pywalfox
-ln -s /usr/bin/screeninfo /usr/lib/python3.13/site-packages/screeninfo
+ln -s /usr/bin/screeninfo /usr/lib/python3.13/site-packages/screeninfo/screeninfo
 ln -s /usr/bin/hyprshade /usr/lib/python3.13/site-packages/hyprshade
 
 echo "Adding oh-my-posh to local binaries..."
