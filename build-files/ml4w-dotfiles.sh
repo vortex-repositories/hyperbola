@@ -38,8 +38,8 @@ cp share/dotfiles/.zshrc /etc/skel/.zshrc
 cp share/dotfiles/.gtkrc-2.0 /etc/skel/.gtkrc-2.0
 
 # for wal to work, we should make a wallpapers example with the distro wallpapers symlinked
-mkdir /etc/skel/wallpapers/
-ln -s /usr/share/hyperbola/wallpapers/main.png /etc/skel/wallpapers/default.jpg
+mkdir /etc/skel/Wallpapers/
+ln -s /usr/share/hyperbola/wallpapers/main.png /etc/skel/Wallpapers/default.jpg
 
 # Copy the preferred font by the dotfiles (coming in future release)
 # cp share/fonts/FiraCode /usr/share/fonts
