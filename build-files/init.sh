@@ -2,6 +2,10 @@
 
 set -ouex pipefail
 
+### Install required COPR Repositories
+dnf5 -y copr enable solopasha/hyprland
+dnf5 -y copr enable varlad/yazi
+
 ### Install packages
 echo "Installing core libraries" && dnf install -y gum tmux jq cargo gtk4-devel python3-pip
 
@@ -61,3 +65,7 @@ systemctl enable podman.socket
 
 #### Post-build service patches
 systemctl enable greetd-workaround.service
+
+#### Post-build COPR Repos
+dnf5 -y copr disable solopasha/hyprland
+dnf5 -y copr disable varlad/yazi
