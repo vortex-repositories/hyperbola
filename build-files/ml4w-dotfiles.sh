@@ -42,7 +42,7 @@ mkdir /etc/skel/Wallpapers/
 ln -s /usr/share/hyperbola/wallpapers/main.png /etc/skel/Wallpapers/default.jpg
 
 # Copy the preferred font by the dotfiles
-cp -r share/fonts/FiraCode /usr/share/fonts
+cp -r share/fonts/FiraCode/* /usr/share/fonts
 
 # Installing the ML4W Apps
 app_name="com.ml4w.welcome"
