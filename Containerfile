@@ -15,6 +15,7 @@ FROM ghcr.io/ublue-os/base-main:latest
 
 #COPY build.sh /tmp/build.sh
 COPY build-files/* /tmp/build/
+COPY pywal-template/* /etc/skel/.cache/wal/
 COPY repos/* /etc/yum.repos.d/
 #COPY config/default/* /etc/skel/.config/
 COPY config/system/scripts/* /usr/share/hyperbola/scripts/
