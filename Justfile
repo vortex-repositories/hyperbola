@@ -1,16 +1,20 @@
 export repo_organization := env("GITHUB_REPOSITORY_OWNER", "vortex-repositories")
 export image_name := env("IMAGE_NAME", "hyperbola")
 export default_tag := env("DEFAULT_TAG", "latest")
-export bib_image := env("BIB_IMAGE", "ghcr.io/osbuild/bootc-image-builder:latest")
+export bib_image := env("BIB_IMAGE", "quay.io/centos-bootc/bootc-image-builder:latest")
+
 export SUDO_DISPLAY := if `if [ -n "${DISPLAY:-}" ] || [ -n "${WAYLAND_DISPLAY:-}" ]; then echo true; fi` == "true" { "true" } else { "false" }
 export SUDOIF := if `id -u` == "0" { "" } else { if SUDO_DISPLAY == "true" { "pkexec" } else { "sudo" } }
 export PODMAN := if path_exists("/usr/bin/podman") == "true" { env("PODMAN", "/usr/bin/podman") } else { if path_exists("/usr/bin/docker") == "true" { env("PODMAN", "docker") } else { env("PODMAN", "exit 1 ; ") } }
+
 alias build-vm := build-qcow2
 alias rebuild-vm := rebuild-qcow2
 alias run-vm := run-vm-qcow2
+
 [private]
 default:
     @just --list
+
 # Check Just Syntax
 [group('Just')]
 check:
@@ -21,6 +25,7 @@ check:
     done
     echo "Checking syntax: Justfile"
     just --unstable --fmt --check -f Justfile
+
 # Fix Just Syntax
 [group('Just')]
 fix:
@@ -31,6 +36,7 @@ fix:
     done
     echo "Checking syntax: Justfile"
     just --unstable --fmt -f Justfile || { exit 1; }
+
 # Clean Repo
 [group('Utility')]
 clean:
@@ -41,37 +47,46 @@ clean:
     rm -f previous.manifest.json
     rm -f changelog.md
     rm -f output.env
+
 # Sudo Clean Repo
 [group('Utility')]
 [private]
 sudo-clean:
     ${SUDOIF} just clean
+
 build $target_image=image_name $tag=default_tag:
     #!/usr/bin/env bash
+
     # Get Version
     ver="${tag}-$(date +%Y%m%d)"
+
     BUILD_ARGS=()
     BUILD_ARGS+=("--build-arg" "IMAGE_NAME=${image_name}")
     BUILD_ARGS+=("--build-arg" "IMAGE_VENDOR=${repo_organization}")
     if [[ -z "$(git status -s)" ]]; then
         BUILD_ARGS+=("--build-arg" "SHA_HEAD_SHORT=$(git rev-parse --short HEAD)")
     fi
+
     ${PODMAN} build \
         "${BUILD_ARGS[@]}" \
         --pull=newer \
         --tag "${image_name}:${tag}" \
         .
+
 _rootful_load_image $target_image=image_name $tag=default_tag:
     #!/usr/bin/bash
     set -eoux pipefail
+
     if [[ -n "${SUDO_USER:-}" || "${UID}" -eq "0" ]]; then
         echo "Already root or running under sudo, no need to load image from user ${PODMAN}."
         exit 0
     fi
+
     set +e
     resolved_tag=$(${PODMAN} inspect -t image "${target_image}:${tag}" | jq -r '.[].RepoTags.[0]')
     return_code=$?
     set -e
+
     if [[ $return_code -eq 0 ]]; then
         # Load into Rootful ${PODMAN}
         ID=$(${SUDOIF} ${PODMAN} images --filter reference="${target_image}:${tag}" --format "'{{ '{{.ID}}' }}'")
@@ -84,20 +99,26 @@ _rootful_load_image $target_image=image_name $tag=default_tag:
         # Make sure the image is present and/or up to date
         ${SUDOIF} ${PODMAN} pull "${target_image}:${tag}"
     fi
+
 _build-bib $target_image $tag $type $config: (_rootful_load_image target_image tag)
     #!/usr/bin/env bash
     set -euo pipefail
+
     mkdir -p "output"
+
     echo "Cleaning up previous build"
     if [[ $type == iso ]]; then
       sudo rm -rf "output/bootiso" || true
     else
       sudo rm -rf "output/${type}" || true
     fi
+
     args="--type ${type}"
+
     if [[ $target_image == localhost/* ]]; then
       args+=" --local"
     fi
+
     sudo ${PODMAN} run \
       --rm \
       -it \
@@ -111,30 +132,43 @@ _build-bib $target_image $tag $type $config: (_rootful_load_image target_image t
       "${bib_image}" \
       ${args} \
       "${target_image}"
+
     sudo chown -R $USER:$USER output
+
 _rebuild-bib $target_image $tag $type $config: (build target_image tag) && (_build-bib target_image tag type config)
+
 [group('Build Virtual Machine Image')]
 build-qcow2 $target_image=("localhost/" + image_name) $tag=default_tag: && (_build-bib target_image tag "qcow2" "image.toml")
+
 [group('Build Virtual Machine Image')]
 build-raw $target_image=("localhost/" + image_name) $tag=default_tag: && (_build-bib target_image tag "raw" "image.toml")
+
 [group('Build Virtual Machine Image')]
 build-iso $target_image=("localhost/" + image_name) $tag=default_tag: && (_build-bib target_image tag "iso" "iso.toml")
+
 [group('Build Virtual Machine Image')]
 rebuild-qcow2 $target_image=("localhost/" + image_name) $tag=default_tag: && (_rebuild-bib target_image tag "qcow2" "image.toml")
+
 [group('Build Virtual Machine Image')]
 rebuild-raw $target_image=("localhost/" + image_name) $tag=default_tag: && (_rebuild-bib target_image tag "raw" "image.toml")
+
 [group('Build Virtual Machine Image')]
 rebuild-iso $target_image=("localhost/" + image_name) $tag=default_tag: && (_rebuild-bib target_image tag "iso" "iso.toml")
+
 _run-vm $target_image $tag $type $config:
     #!/usr/bin/bash
     set -eoux pipefail
+
     image_file="output/${type}/disk.${type}"
+
     if [[ $type == iso ]]; then
         image_file="output/bootiso/install.iso"
     fi
+
     if [[ ! -f "${image_file}" ]]; then
         just "build-${type}" "$target_image" "$tag"
     fi
+
     # Determine which port to use
     port=8006;
     while grep -q :${port} <<< $(ss -tunalp); do
@@ -158,9 +192,12 @@ _run-vm $target_image $tag $type $config:
     ${PODMAN} run "${run_args[@]}" &
     xdg-open http://localhost:${port}
     fg "%${PODMAN}"
+
 [group('Run Virtual Machine')]
 run-vm-qcow2 $target_image=("localhost/" + image_name) $tag=default_tag: && (_run-vm target_image tag "qcow2" "image-builder.config.toml")
+
 [group('Run Virtual Machine')]
 run-vm-raw $target_image=("localhost/" + image_name) $tag=default_tag: && (_run-vm target_image tag "raw" "image-builder.config.toml")
+
 [group('Run Virtual Machine')]
 run-vm-iso $target_image=("localhost/" + image_name) $tag=default_tag: && (_run-vm target_image tag "iso" "image-builder-iso.config.toml")
