@@ -23,7 +23,8 @@ export CARGO_HOME="/tmp/.cargo"
 echo "Installing Hyprland" && dnf install -y hyprland hyprland-plugins hyprland-contrib hyprpaper hyprsunset xdg-desktop-portal-hyprland hyprlock hypridle hyprpolkitagent hyprsysteminfo
 echo "Installing Common Components" && dnf install -y astral aylurs-gtk-shell rofi waypaper swww cliphist nwg-look qt6ct nwg-dock-hyprland xdg-desktop-portal-gtk wlogout waybar nautilus
 echo "Installing Display Manager Backend" && dnf install -y greetd
-echo "Installing Misc Packages" && dnf install -y bibata-cursor-theme ghostty adw-gtk3-theme yazi neovim
+echo "Installing Fonts" && dnf install -y fira-code-fonts
+echo "Installing Misc Packages" && dnf install -y bibata-cursor-theme ghostty adw-gtk3-theme yazi neovim eza fastfetch
 
 ## Regreet copr is inactive and there is no native RPM for Regreet, it will be manually build & installed instead.
 source /tmp/build/regreet.sh
