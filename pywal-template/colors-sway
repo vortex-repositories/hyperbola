@@ -1,0 +1,21 @@
+set $wallpaper /usr/share/ml4w-hyprland/wallpapers/default.jpg
+
+set $background #071115
+set $foreground #bfad99
+
+set $color0 #071115
+set $color1 #273D42
+set $color2 #344A4D
+set $color3 #44595A
+set $color4 #4C5F5F
+set $color5 #546868
+set $color6 #637876
+set $color7 #bfad99
+set $color8 #85796b
+set $color9 #273D42
+set $color10 #344A4D
+set $color11 #44595A
+set $color12 #4C5F5F
+set $color13 #546868
+set $color14 #637876
+set $color15 #bfad99

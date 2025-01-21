@@ -1,0 +1,23 @@
+" Special
+let wallpaper  = "/usr/share/ml4w-hyprland/wallpapers/default.jpg"
+let background = "#071115"
+let foreground = "#bfad99"
+let cursor     = "#bfad99"
+
+" Colors
+let color0  = "#071115"
+let color1  = "#273D42"
+let color2  = "#344A4D"
+let color3  = "#44595A"
+let color4  = "#4C5F5F"
+let color5  = "#546868"
+let color6  = "#637876"
+let color7  = "#bfad99"
+let color8  = "#85796b"
+let color9  = "#273D42"
+let color10 = "#344A4D"
+let color11 = "#44595A"
+let color12 = "#4C5F5F"
+let color13 = "#546868"
+let color14 = "#637876"
+let color15 = "#bfad99"
