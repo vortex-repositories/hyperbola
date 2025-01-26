@@ -29,5 +29,5 @@ COPY config/login/hyprland.conf /tmp/hyprland.conf
 
 RUN mkdir -p /var/lib/alternatives && \
     /tmp/build/init.sh && \
-    ostree container commit && \
-    bootc container lint
+    ostree container commit # && \
+    # bootc container lint
