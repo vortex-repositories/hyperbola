@@ -60,6 +60,10 @@ cp /tmp/regreet.toml /etc/greetd/
 #source dotfile-installation
 chmod +x /usr/share/hyperbola/scripts/*.sh
 
+# Setting up plymouth theme
+plymouth-set-default-theme -R hyperbola-custom
+dracut --regenerate-all -f
+
 #### Example for enabling a System Unit File
 systemctl enable greetd.service
 systemctl enable podman.socket

@@ -20,6 +20,7 @@ COPY repos/* /etc/yum.repos.d/
 #COPY config/default/* /etc/skel/.config/
 COPY config/system/scripts/* /usr/share/hyperbola/scripts/
 COPY assets/wallpapers/* /usr/share/hyperbola/wallpapers/
+COPY assets/plymouth/* /usr/share/plymouth/themes/hyperbola-custom/
 COPY config/system/services/* /usr/lib/systemd/system/
 
 COPY config/login/regreet.toml /tmp/regreet.toml
