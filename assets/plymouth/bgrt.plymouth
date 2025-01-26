@@ -1,12 +1,12 @@
 [Plymouth Theme]
-Name=hyperbola-custom
+Name=bgrt
 Description=A custom hyperbola plymouth theme for the hyperbola distribution.
 ModuleName=two-step
 
 [two-step]
 Font=Cantarell 10
 TitleFont=Cantarell Light 25
-ImageDir=/usr/share/plymouth/themes/hyperbola-custom/images
+ImageDir=/usr/share/plymouth/themes/bgrt/images
 DialogHorizontalAlignment=.5
 DialogVerticalAlignment=.5
 TitleHorizontalAlignment=.5
@@ -53,7 +53,7 @@ UseFirmwareBackground=false
 SuppressMessages=true
 ProgressBarShowPercentComplete=true
 UseProgressBar=true
-Title=Installing Upgrades...
+Title=Upgrading System...
 SubTitle=Please do not turn off your computer.
 
 [firmware-upgrade]
@@ -61,5 +61,13 @@ UseFirmwareBackground=false
 SuppressMessages=true
 ProgressBarShowPercentComplete=true
 UseProgressBar=true
-Title=Installing Firmware Updates...
+Title=Upgrading Firmware...
+SubTitle=Please do not turn off your computer.
+
+[system-reset]
+UseFirmwareBackground=false
+SuppressMessages=true
+ProgressBarShowPercentComplete=true
+UseProgressBar=true
+Title=Resetting System...
 SubTitle=Please do not turn off your computer.

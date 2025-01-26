@@ -36,15 +36,6 @@ source /tmp/build/ml4w-dotfiles.sh
 # rpm-ostree install vlc
 
 ## Immutable systems installed on hardware/vms do not see greeter added, a different method must be used.
-# Create the greeter system user for greetd
-#useradd -M -N greeter
-## Instead try to manually add to /usr/etc/passwd
-#grep -E '^greetd:' /usr/etc/passwd | tee -a /etc/passwd
-#grep -E '^greetd:' /usr/etc/group | tee -a /etc/group
-## this does not work either because build process will error as in the process, it doesn't exist.
-### In both podman and VM/Bare Metal, greetd is not found in /etc/shadow, Try to add it manually..
-#echo 'greetd:!:::::::' >> /etc/shadow
-## it gets added to /usr/etc/shadow, we do not know a easier way to move this to base /etc/shadow everytime.
 
 echo "Finishing Up"
 
@@ -61,8 +52,9 @@ cp /tmp/regreet.toml /etc/greetd/
 chmod +x /usr/share/hyperbola/scripts/*.sh
 
 # Setting up plymouth theme
-plymouth-set-default-theme -R hyperbola-custom
-rpm-ostree initramfs --enable
+rm -rf /usr/share/plymouth/themes/bgrt/bgrt.plymouth
+cp -r /tmp/hyperbola-custom-plymouth/* /usr/share/plymouth/themes/bgrt/
+#rpm-ostree initramfs --enable
 
 #### Example for enabling a System Unit File
 systemctl enable greetd.service
