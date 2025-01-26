@@ -62,7 +62,7 @@ chmod +x /usr/share/hyperbola/scripts/*.sh
 
 # Setting up plymouth theme
 plymouth-set-default-theme -R hyperbola-custom
-dracut --regenerate-all -f
+rpm-ostree initramfs --enable
 
 #### Example for enabling a System Unit File
 systemctl enable greetd.service
