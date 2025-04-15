@@ -15,4 +15,4 @@ echo "Building Display Manager"
 cargo build -F gtk4_8 --release
 echo "Installing Display Manager"
 cp target/release/regreet /usr/bin
-cd /tmp/build/
+cd /
