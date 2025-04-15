@@ -6,6 +6,9 @@ set -ouex pipefail
 dnf5 -y copr enable solopasha/hyprland
 dnf5 -y copr enable varlad/yazi
 
+### Install Terra repository
+dnf5 -y install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
+
 ### Install packages
 echo "Installing core libraries" && dnf install -y gum tmux jq cargo gtk4-devel python3-pip
 
