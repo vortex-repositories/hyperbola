@@ -21,7 +21,7 @@ COPY assets/plymouth/* /design/boot/
 COPY config/* /template/config/
 
 # Base Image
-FROM ghcr.io/ublue-os/base-main:latest
+FROM ghcr.io/ublue-os/base-main:latest@sha256:073c47a60ad72be4f998cfa4ae9033484998b678c7c20237faaa1e7cfc69bc02
 
 ## Other possible base images include:
 # FROM ghcr.io/ublue-os/bazzite:stable

@@ -107,7 +107,7 @@ jobs:
 
       - name: Build Image
         id: build_image
-        uses: redhat-actions/buildah-build@v2
+        uses: redhat-actions/buildah-build@7a95fa7ee0f02d552a32753e7414641a04307056 # v2
         with:
           containerfiles: |
             ./Containerfile
@@ -156,7 +156,7 @@ jobs:
       # https://github.com/macbre/push-to-ghcr/issues/12
       - name: Lowercase Registry
         id: registry_case
-        uses: ASzc/change-string-case-action@v6
+        uses: ASzc/change-string-case-action@d0603cd0a7dd490be678164909f65c7737470a7f # v6
         with:
           string: ${{ env.IMAGE_REGISTRY }}
 
@@ -195,7 +195,7 @@ jobs:
           COSIGN_PRIVATE_KEY: ${{ secrets.SIGNING_SECRET }}
 
       - name: Apply Badge
-        uses: RubbaBoy/BYOB@v1.3.0
+        uses: RubbaBoy/BYOB@24f464284c1fd32028524b59607d417a2e36fee7 # v1.3.0
         with:
           NAME: build-timestamp
           LABEL: "Version "
@@ -216,7 +216,7 @@ jobs:
 
     steps:
       - name: Read Image Tags
-        uses: jungwinter/split@v2
+        uses: jungwinter/split@a211a1c46e35fcdc4097d59dd6282d4a9859651b # v2
         id: collect
         with:
           msg: ${{ needs.build_push.outputs.tags }}
@@ -240,7 +240,7 @@ jobs:
       # This example is for uploading your ISO as a Github artifact. You can do something similar using any cloud storage, so long as you copy the output
       - name: Upload ISO as artifact
         id: upload
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: ${{ steps.build.outputs.iso_name }}
           path: |
